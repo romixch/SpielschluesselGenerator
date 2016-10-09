@@ -7,20 +7,10 @@ import java.util.*
  * Created by roman on 06.10.16.
  */
 
-class PlanChromosome(conf: Configuration, genes: Array<Gene>): Chromosome(conf, genes) {
-
-    val f: Game
-        get() = Game(1,2)
-
-    val gameGenes: Array<GameGene>
-        get() = genes as Array<GameGene>
-
-    override fun perform(a_obj: Any?, a_class: Class<*>?, a_params: Any?): Any? {
-        return PlanChromosome(configuration, genes)
-    }
-}
-
 class GameGene(val gameSlots: ArrayList<GameSlot>, conf: Configuration): BaseGene(conf) {
+
+    constructor(cloneTemplate: GameGene) : this(cloneTemplate.gameSlots, cloneTemplate.configuration) {
+    }
 
     private var value: GameSlot = GameSlot(null)
 
@@ -34,7 +24,7 @@ class GameGene(val gameSlots: ArrayList<GameSlot>, conf: Configuration): BaseGen
 
     fun getGameSlot(): GameSlot = value
 
-    override fun getInternalValue(): Any? = value.game
+    override fun getInternalValue(): Any? = value
 
     override fun compareTo(other: Any?): Int {
         if (other is GameGene) {
@@ -50,7 +40,7 @@ class GameGene(val gameSlots: ArrayList<GameSlot>, conf: Configuration): BaseGen
     }
 
     override fun applyMutation(index: Int, a_percentage: Double) {
-        setAllele(gameSlots[configuration.randomGenerator.nextInt(gameSlots.size)])
+        allele = gameSlots[configuration.randomGenerator.nextInt(gameSlots.size)]
     }
 
     // no persistence
@@ -64,17 +54,15 @@ class BestPlanFitnessFunction : FitnessFunction {
 
     override fun evaluate(subject: IChromosome): Double {
         var fitness: Double = 0.0
-        if (subject is PlanChromosome) {
-            val genes = subject.gameGenes
-            fitness += calculateGameDiversity(genes)
-        }
+        val genes = subject.genes
+        fitness += calculateGameDiversity(genes)
         return fitness
     }
 
-    private fun calculateGameDiversity(genes: Array<GameGene>): Double {
+    private fun calculateGameDiversity(genes: Array<Gene>): Double {
         val distinctGames = HashSet<Game?>()
-        genes.forEach { g -> distinctGames.add(g.getGameSlot().game) }
-        return distinctGames.size as Double / genes.size
+        genes.forEach { g -> distinctGames.add((g as GameGene).getGameSlot().game) }
+        return distinctGames.size.toDouble() / genes.size.toDouble()
     }
 
 }

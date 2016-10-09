@@ -2,6 +2,7 @@ package ch.romix.spielschluessel
 
 import org.jgap.Chromosome
 import org.jgap.Genotype
+import org.jgap.impl.ChromosomePool
 import org.jgap.impl.DefaultConfiguration
 import java.util.*
 
@@ -24,18 +25,22 @@ fun main(args: Array<String>) {
         }
     }
 
-    val genes = gameSlots.map { g -> GameGene(gameSlots, conf) }.toList()
+    fun transform (it:GameSlot): GameGene {
+        val gg = GameGene(gameSlots, conf)
+        gg.setToRandomValue(conf.randomGenerator)
+        return gg
+    }
 
-    val planChromosome = PlanChromosome(conf, genes.toTypedArray())
-    conf.sampleChromosome = planChromosome
+    val genes: List<GameGene> = gameSlots.map { transform(it) }.toList()
 
+    val chromosome = Chromosome(conf, genes.toTypedArray())
+    conf.sampleChromosome = chromosome
     conf.populationSize = 100
     val population = Genotype.randomInitialGenotype(conf)
 
-    for (i in 1..10) {
+    for (i in 1..30) {
         population.evolve()
+        println(population.fittestChromosome)
     }
 
-    val bestPlanSoFar = population.fittestChromosome
-    println(bestPlanSoFar)
 }
