@@ -1,4 +1,4 @@
-package ch.romix.ivk.spielschluessel
+package ch.romix.spielschluessel
 
 import java.util.*
 
@@ -42,16 +42,6 @@ fun generateSchedule(days: Int, timeSlotsPerDay: Int, gamesPerTimeSlot: Int): Sc
     return Schedule(dayList)
 }
 
-data class Game(val teamA: Int, val teamB: Int)
-
-data class GameSlot(var game: Game?)
-
-data class TimeSlot(val slot: Int, val games: List<GameSlot>)
-
-data class Day(val slots: List<TimeSlot>)
-
-data class Schedule(val days: List<Day>)
-
 class GenerationState {
     private val teamsCount: Int
     private val gameSlotsCount: Int
@@ -84,7 +74,7 @@ class GenerationState {
         for (day in schedule.days) {
             for (slot in day.slots) {
                 for (gameSlot in slot.games) {
-                    gameSlot.game = games[i]
+                    //gameSlot.game = games[i]
                     i++
                 }
             }

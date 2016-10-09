@@ -1,4 +1,4 @@
-package ch.romix.ivk.spielschluessel
+package ch.romix.spielschluessel
 
 /**
  * Created by roman on 24.09.16.

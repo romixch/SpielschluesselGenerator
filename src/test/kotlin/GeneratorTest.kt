@@ -1,5 +1,6 @@
 package ch.romix.ivk.spielschluessel
 
+import ch.romix.spielschluessel.Generator
 import org.junit.Assert.*
 import org.junit.Test
 import org.hamcrest.core.Is.*
