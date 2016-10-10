@@ -3,6 +3,8 @@ package ch.romix.ivk.spielschluessel
 import org.junit.Assert.*
 import org.junit.Test
 import org.hamcrest.core.Is.*
+import java.math.BigInteger
+
 /**
  * Created by roman on 24.09.16.
  */
@@ -25,9 +27,32 @@ class GeneratorTest {
     @Test
     fun testLastRow() {
         val gen = Generator(5)
-        for (i in 0..120)
+        println("Generate for " + gen.getPossibilities() + " slots")
+        var p = gen.getPossibilities().toLong() - 1
+        for (i in 1..p) {
             gen.proceed()
+        }
         assertThat(gen).matches(5,4,3,2,1)
+    }
+
+    @Test
+    fun testGenerateAllPossibilitiesFor10Slots() {
+        val gen = Generator(10)
+        println("Generate for " + gen.getPossibilities() + " slots")
+        var p = gen.getPossibilities().toLong() - 1
+        for (i in 1..p) {
+            gen.proceed()
+        }
+    }
+
+    @Test
+    fun testGenerateAllPossibilitiesFor45Slots() {
+        val gen = Generator(45)
+        println("Generate for " + gen.getPossibilities() + " slots")
+        var p = gen.getPossibilities().toLong() - 1
+        for (i in 1..p) {
+            gen.proceed()
+        }
     }
 
     private fun assertThat(gen: Generator): Matcher {
