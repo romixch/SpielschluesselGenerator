@@ -5,9 +5,7 @@ import org.jgap.FitnessFunction
 import org.jgap.Gene
 import java.util.*
 
-class BestPlanFitnessFunction : FitnessFunction {
-
-    constructor()
+class BestPlanFitnessFunction(val rows: Int, val cols: Int) : FitnessFunction() {
 
     override fun evaluate(subject: IChromosome): Double {
         var fitness: Double = 0.0
