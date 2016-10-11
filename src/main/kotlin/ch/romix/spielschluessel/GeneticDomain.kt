@@ -48,3 +48,20 @@ class GameGene(val gameSlots: ArrayList<GameSlot>, conf: Configuration): BaseGen
     override fun getPersistentRepresentation(): String? = throw UnsupportedOperationException()
 }
 
+fun IChromosome.toSchedule(bestPlanFitnessFunction: BestPlanFitnessFunction): Schedule {
+    var gameIndex = 0
+    val timeSlots = ArrayList<TimeSlot>()
+    for (row in 0..bestPlanFitnessFunction.rows - 1) {
+        val gameSlots = ArrayList<GameSlot>()
+        for (col in 0..bestPlanFitnessFunction.cols - 1) {
+            val gameGene = this.genes[gameIndex] as GameGene
+            gameSlots.add(gameGene.getGameSlot())
+            gameIndex++
+        }
+        val timeSlot = TimeSlot(row, gameSlots)
+        timeSlots.add(timeSlot)
+    }
+    val day = Day(timeSlots)
+    return Schedule(listOf(day))
+}
+

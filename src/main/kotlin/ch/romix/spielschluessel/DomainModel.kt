@@ -21,11 +21,25 @@ data class GameSlot(val game: Game?) : Comparable<GameSlot> {
                     game.teamB.compareTo(other.game.teamB)
         }
     }
+
+    override fun toString(): String {
+        if (game == null) {
+            return "    :    |"
+        } else {
+            return " %2s : %2s |".format(game.teamA, game.teamB)
+        }
+    }
 }
 
 data class TimeSlot(val slot: Int, val games: List<GameSlot>) {
     fun teams() : IntArray {
         return games.map { it.game }.filter { it != null }.flatMap { intArrayOf(it!!.teamA, it!!.teamB).asIterable() }.toIntArray()
+    }
+
+    override fun toString(): String {
+        val sb = StringBuilder("%4s : |".format(slot))
+        games.forEach { sb.append(it) }
+        return sb.toString()
     }
 }
 
@@ -51,6 +65,24 @@ data class Day(val slots: List<TimeSlot>) {
         }
         return pauses
     }
+
+    override fun toString(): String {
+        val sb = StringBuilder()
+        sb.append("----------------------------\n")
+        slots.forEach { sb.append("$it\n") }
+        sb.append("----------------------------\n")
+        return sb.toString()
+    }
 }
 
-data class Schedule(val days: List<Day>)
+data class Schedule(val days: List<Day>) {
+    override fun toString(): String {
+        val sb = StringBuilder()
+        days.forEach { d ->
+            run {
+                sb.append("Day: \n $d")
+            }
+        }
+        return sb.toString()
+    }
+}

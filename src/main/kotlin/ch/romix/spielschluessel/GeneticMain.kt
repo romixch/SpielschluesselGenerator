@@ -53,7 +53,7 @@ fun main(args: Array<String>) {
 
     for (i in 1..30) {
         population.evolve()
-        println(population.fittestChromosome)
+        println(population.fittestChromosome.toSchedule(bestPlanFitnessFunction))
     }
 
 }
