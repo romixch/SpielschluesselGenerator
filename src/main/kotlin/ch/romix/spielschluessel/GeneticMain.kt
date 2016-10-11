@@ -12,12 +12,11 @@ import javax.naming.ConfigurationException
  */
 
 fun main(args: Array<String>) {
-    val bestPlanFitnessFunction = BestPlanFitnessFunction(rows = 15, cols = 2)
+    val bestPlanFitnessFunction = BestPlanFitnessFunction(rows = 15, cols = 2, numberOfTeams = 5)
 
     val gameSlots = ArrayList<GameSlot>()
-    val numberOfTeams = 5
-    for (a in 1..numberOfTeams){
-        for (b in 1..numberOfTeams) {
+    for (a in 1..bestPlanFitnessFunction.numberOfTeams){
+        for (b in 1..bestPlanFitnessFunction.numberOfTeams) {
             if (a != b) {
                 val game = Game(a, b)
                 gameSlots.add(GameSlot(game))

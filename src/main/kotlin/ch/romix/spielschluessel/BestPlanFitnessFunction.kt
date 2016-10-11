@@ -6,14 +6,15 @@ import org.jgap.Gene
 import java.awt.List
 import java.util.*
 
-class BestPlanFitnessFunction(val rows: Int, val cols: Int) : FitnessFunction() {
+class BestPlanFitnessFunction(val rows: Int, val cols: Int, val numberOfTeams: Int) : FitnessFunction() {
 
     override fun evaluate(subject: IChromosome): Double {
-        var fitness: Double = 0.0
+        var fitness: Double = 100.0
         val genes = subject.genes
         fitness += calculateGameDiversity(genes)
         val schedule = buildSchedule(genes)
         fitness += optimizeForOnePauseFromGameToGame(schedule)
+        if (fitness < 0.0) fitness = 0.0
         return fitness
     }
 
@@ -41,7 +42,21 @@ class BestPlanFitnessFunction(val rows: Int, val cols: Int) : FitnessFunction() 
     }
 
     private fun optimizeForOnePauseFromGameToGame(schedule: Schedule): Double {
-
-        return 0.0
+        var result = 0.0
+        for (day in schedule.days) {
+            for (team in 1..numberOfTeams) {
+                val pauses = day.getPausesForTeam(1)
+                for (pause in pauses) {
+                    if (pause < 0) {
+                        result -= 2
+                    } else if (pause == 0) {
+                        result -= 1
+                    } else {
+                        result += 2 - pause
+                    }
+                }
+            }
+        }
+        return result
     }
 }
