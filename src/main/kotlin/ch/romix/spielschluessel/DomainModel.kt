@@ -3,7 +3,7 @@ package ch.romix.spielschluessel
 import java.util.*
 
 /**
- * Created by roman on 06.10.16.
+ * This file contains all the domain model.
  */
 
 data class Game(val teamA: Int, val teamB: Int)

@@ -4,7 +4,10 @@ import org.jgap.*
 import java.util.*
 
 /**
- * Created by roman on 06.10.16.
+ * This contains the genetic specific logic.
+ *
+ * A GameGene represents a single Game.
+ * A Chromosome represents a series of GameGenes / Games
  */
 
 class GameGene(val gameSlots: ArrayList<GameSlot>, conf: Configuration): BaseGene(conf) {

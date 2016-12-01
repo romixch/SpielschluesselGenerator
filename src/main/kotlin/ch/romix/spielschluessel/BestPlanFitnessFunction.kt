@@ -1,10 +1,13 @@
 package ch.romix.spielschluessel
 
-import org.jgap.IChromosome
 import org.jgap.FitnessFunction
 import org.jgap.Gene
-import java.util.*
+import org.jgap.IChromosome
 
+/**
+ * This is the fitness function. It calculates the fitness of a Schedule. The higher the score
+ * the fitter this schedule is.
+ */
 class BestPlanFitnessFunction(val rows: Int, val cols: Int, val numberOfTeams: Int) : FitnessFunction() {
 
     val correctGameCount: Int

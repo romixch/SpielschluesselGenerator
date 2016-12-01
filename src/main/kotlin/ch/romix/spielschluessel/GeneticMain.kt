@@ -3,10 +3,8 @@ package ch.romix.spielschluessel
 import org.jgap.Chromosome
 import org.jgap.Genotype
 import org.jgap.IChromosome
-import org.jgap.impl.ChromosomePool
 import org.jgap.impl.DefaultConfiguration
 import java.util.*
-import javax.naming.ConfigurationException
 
 /**
  * Created by roman on 06.10.16.
