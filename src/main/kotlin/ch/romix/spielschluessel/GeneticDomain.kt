@@ -65,3 +65,8 @@ fun IChromosome.toSchedule(bestPlanFitnessFunction: BestPlanFitnessFunction): Sc
     return Schedule(listOf(day))
 }
 
+fun Array<Gene>.countDistinctGames() : Int {
+    val distinctGames = HashSet<Game?>()
+    this.forEach { g -> distinctGames.add((g as GameGene).getGameSlot().game) }
+    return distinctGames.size
+}
